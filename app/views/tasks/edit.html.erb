@@ -1,0 +1,9 @@
+<h1>Editting <%= @task.name %></h1>
+
+<%= form_for(@tasks) do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.submit %>
+<% end %>
+
+<%= link_to "Edit", tasks_path %>

@@ -1,0 +1,10 @@
+<h1>List of tasks</h1>
+
+<%= link_to "Add a task", tasks_new_path %>
+
+<% @tasks.each do |task| %>
+<%= task.name %><br><%= link_to "Delete", task_path(task), method: :delete %>
+<%= link_to "Edit", task_path(task), method: :patch %><br>
+<% end %>
+
+
