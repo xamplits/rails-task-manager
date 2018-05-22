@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_action :fetch_task, except: [:index, :new, :create, :show]
+
   def index
     @tasks = Task.all
   end
@@ -8,8 +10,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(params_task)
-    @task.save
+    Task.new(params_task)
     redirect_to tasks_path(@tasks)
   end
 
@@ -18,9 +19,8 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
-    @task.update(params_task)
-    redirect_to tasks_path(@tasks)
+    @task.update(params[:task])
+    redirect_to tasks_path(@task)
   end
 
   def show
@@ -28,16 +28,18 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    # @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path(@tasks)
+    # redirect_to tasks_path(@tasks)
   end
 
   private
 
-  def params_task
-    params.require(:task).permit(:name)
+  def fetch_task
+    @task = Task.find(params[:id])
   end
 
-
+  def params_task
+    params.require(:task).permit(:title, :details)
+  end
 end
